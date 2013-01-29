@@ -14,4 +14,5 @@ task :update, [:path] do |t,args|
   FileUtils.rm_rf ROOT.join("neo4j/data")
   FileUtils.rm_rf ROOT.join("neo4j/examples")
   FileUtils.rm_rf ROOT.join("neo4j/doc")
+  FileUtils.rm_rf ROOT.join("neo4j/bin")
 end
