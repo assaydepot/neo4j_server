@@ -2,4 +2,6 @@
 
 Neo4j::Server is a packaged distribution of the Neo4j java server.
 
+Just install and run neo4j_server. Check --help for more options.
+
 This Gem is inspired by the sunspot_solr package.
