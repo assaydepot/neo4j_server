@@ -1,0 +1,53 @@
+#!/usr/bin/env ruby
+# Not sure if the following two lines should be here.
+lib = File.join(File.dirname(__FILE__), '..', 'lib')
+$:.unshift(lib) unless $:.include?(lib)
+
+begin
+  require 'tmpdir'
+  require 'optparse'
+  require 'pathname'
+  require File.join(lib, 'neo4j_server', 'server')
+rescue LoadError => e
+  if require 'rubygems'
+    retry
+  else
+    raise(e)
+  end
+end
+
+server = Neo4jServer::Server.new
+server.data_dir = Pathname.new(Dir.tmpdir).join("neo4j_data")
+server.log_dir  = server.data_dir.join("log")
+server.neo4j_home = Pathname.new(lib).join("../neo4j")
+server.port = '7474'
+
+
+opts = OptionParser.new do |opts|
+  opts.banner = "Usage: neo4j_server run [options]"
+
+  opts.on '-p', '--port=PORT', 'Port on which to run Neo4j (default 7474)' do |p|
+    server.port = p
+  end
+
+  opts.on '-h', '--home=HOME_PATH', 'Neo4j home directory' do |h|
+    server.neo4j_home = Pathname.new(h)
+  end
+
+  opts.on '-d', '--data_dir=DATA_PATH', "Neo4j data directory" do |d|
+    server.data_dir = Pathname.new(d)
+  end
+end
+
+opts.parse!
+
+begin
+  case ARGV[0]
+  when 'run'
+    server.run
+  else
+    abort(opts.help)
+  end
+rescue Neo4jServer::Server::ServerError => e
+  abort(e.message)
+end

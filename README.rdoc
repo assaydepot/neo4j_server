@@ -1,0 +1,5 @@
+= Neo4j::Server
+
+Neo4j::Server is a packaged distribution of the Neo4j java server.
+
+This Gem is inspired by the sunspot_solr package.
