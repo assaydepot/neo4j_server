@@ -1,8 +1,6 @@
 # -*- encoding: utf-8 -*-
-lib = File.expand_path('../../neo4j_server/lib/', __FILE__)
-
-$:.unshift(lib) unless $:.include?(lib)
-
+lib = File.expand_path('../lib', __FILE__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'neo4j_server/version'
 
 Gem::Specification.new do |s|
